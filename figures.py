@@ -19,11 +19,11 @@ class Testor():
         this.cvi=KFold(len(X), n_folds=cross_validation, shuffle=True, random_state=None)
         
         
-    def testNrate(this,classifier,weights=None,output_file_name='testNrate'):
+    def testNrate(this,classifier,weights=None,output_file_name='testNrate',info=''):
         predicted = cross_val_predict(classifier, this.X*weights, this.y, cv=this.cvi, n_jobs=1, verbose=0, fit_params=None, pre_dispatch='2*n_jobs')
         right=this.y==predicted
         fig = plt.figure(figsize=(40, 40))
-        fig.suptitle("Accuracy: {0:.2f}%. Cross validation done with {1} segments.".format(sum(right)/len(right)*100,this.Ncv), fontsize=60)
+        fig.suptitle("Accuracy: {0:.2f}%. Cross validation done with {1} segments.\n".format(sum(right)/len(right)*100,this.Ncv)+info)#, fontsize=60)
         ax1 = fig.add_subplot(221,aspect=1)
         ax2 = fig.add_subplot(222,aspect=1)
         X=this.X
@@ -122,7 +122,7 @@ def hists_plot(ax,ax2,y,right,group=20):
     ratio2.reverse()
     for i,v in enumerate(ratio2):
         if v!=0:
-            until=int(pos[len(ratio2)-i])
+            until=int(pos[len(ratio2)-i-1])
             break
     ratio=[r/e for e,r in mylist][:until]
     average=collections.defaultdict(list)
